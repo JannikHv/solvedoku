@@ -1,4 +1,3 @@
-#include <cstdint>
 #include <cstdio>
 
 #include "solver.hpp"
@@ -7,15 +6,15 @@
  * Public
  */
 
-bool Solver::solveSudoku(uint8Matrix &matrix)
+bool Solver::solveSudoku(IntMatrix &matrix)
 {
     return Solver::solvePosition(matrix, 0, 0);
 }
 
-void Solver::displaySudoku(uint8Matrix matrix)
+void Solver::displaySudoku(IntMatrix matrix)
 {
-    for (uint8_t i = 0; i < (uint8_t) matrix.size(); i++) {
-        for (uint8_t k = 0; k < (uint8_t) matrix[i].size(); k++) {
+    for (int i = 0; i < (int) matrix.size(); i++) {
+        for (int k = 0; k < (int) matrix[i].size(); k++) {
             std::printf("%d ", matrix[i][k]);
         }
 
@@ -27,21 +26,21 @@ void Solver::displaySudoku(uint8Matrix matrix)
  * Private
  */
 
-bool Solver::isValidValue(uint8Matrix matrix, uint8_t row, uint8_t col, uint8_t value)
+bool Solver::isValidValue(IntMatrix matrix, int row, int col, int value)
 {
     /* Check vertically and horizontally */
-    for (uint8_t i = 0; i < (uint8_t) matrix.size(); i++) {
+    for (int i = 0; i < (int) matrix.size(); i++) {
         if (matrix[i][col] == value || matrix[row][i] == value) {
             return false;
         }
     }
 
     /* Check block */
-    const uint8_t block_row = (uint8_t) (row / 3) * 3;
-    const uint8_t block_col = (uint8_t) (col / 3) * 3;
+    const int block_row = (int) (row / 3) * 3;
+    const int block_col = (int) (col / 3) * 3;
 
-    for (uint8_t i = block_row; i < (block_row + 3); i++) {
-        for (uint8_t k = block_col; k < (block_col + 3); k++) {
+    for (int i = block_row; i < (block_row + 3); i++) {
+        for (int k = block_col; k < (block_col + 3); k++) {
             if (matrix[i][k] == value) {
                 return false;
             }
@@ -51,19 +50,19 @@ bool Solver::isValidValue(uint8Matrix matrix, uint8_t row, uint8_t col, uint8_t 
     return true;
 }
 
-bool Solver::solveNextPosition(uint8Matrix &matrix, uint8_t row, uint8_t col)
+bool Solver::solveNextPosition(IntMatrix &matrix, int row, int col)
 {
-    if (col >= (matrix[row].size() - 1)) {
+    if (col >= (int) (matrix[row].size() - 1)) {
         return Solver::solvePosition(matrix, (row + 1), 0);
     } else {
         return Solver::solvePosition(matrix, row, (col + 1));
     }
 }
 
-bool Solver::solvePosition(uint8Matrix &matrix, uint8_t row, uint8_t col)
+bool Solver::solvePosition(IntMatrix &matrix, int row, int col)
 {
     /* Sudoku is solved if trying to access row that is out of range */
-    if (row >= matrix.size()) {
+    if (row >= (int) matrix.size()) {
         return true;
     }
 
@@ -73,7 +72,7 @@ bool Solver::solvePosition(uint8Matrix &matrix, uint8_t row, uint8_t col)
     }
 
     /* Try every value for each field and see if it leads to a solution */
-    for (uint8_t value = 1; value < 10; value++) {
+    for (int value = 1; value < 10; value++) {
         if (Solver::isValidValue(matrix, row, col, value)) {
             matrix[row][col] = value;
 
