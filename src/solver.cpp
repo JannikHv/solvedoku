@@ -6,19 +6,19 @@
  * Public
  */
 
-bool Solver::solveSudoku(IntMatrix &matrix)
+bool Solver::solveSudoku(int matrix[9][9])
 {
     return Solver::solvePosition(matrix, 0, 0);
 }
 
-void Solver::displaySudoku(IntMatrix matrix)
+void Solver::displaySudoku(int matrix[9][9])
 {
-    for (int i = 0; i < (int) matrix.size(); i++) {
-        for (int k = 0; k < (int) matrix[i].size(); k++) {
-            std::printf("%d ", matrix[i][k]);
+    for (int i = 0; i < 9; i++) {
+        for (int k = 0; k < 9; k++) {
+            printf("%d ", matrix[i][k]);
         }
 
-        std::printf("\n");
+        printf("\n");
     }
 }
 
@@ -26,10 +26,10 @@ void Solver::displaySudoku(IntMatrix matrix)
  * Private
  */
 
-bool Solver::isValidValue(IntMatrix matrix, int row, int col, int value)
+bool Solver::isValidValue(int matrix[9][9], int row, int col, int value)
 {
     /* Check vertically and horizontally */
-    for (int i = 0; i < (int) matrix.size(); i++) {
+    for (int i = 0; i < 9; i++) {
         if (matrix[i][col] == value || matrix[row][i] == value) {
             return false;
         }
@@ -50,19 +50,19 @@ bool Solver::isValidValue(IntMatrix matrix, int row, int col, int value)
     return true;
 }
 
-bool Solver::solveNextPosition(IntMatrix &matrix, int row, int col)
+bool Solver::solveNextPosition(int matrix[9][9], int row, int col)
 {
-    if (col >= (int) (matrix[row].size() - 1)) {
+    if (col >= 8) {
         return Solver::solvePosition(matrix, (row + 1), 0);
     } else {
         return Solver::solvePosition(matrix, row, (col + 1));
     }
 }
 
-bool Solver::solvePosition(IntMatrix &matrix, int row, int col)
+bool Solver::solvePosition(int matrix[9][9], int row, int col)
 {
     /* Sudoku is solved if trying to access row that is out of range */
-    if (row >= (int) matrix.size()) {
+    if (row >= 9) {
         return true;
     }
 
