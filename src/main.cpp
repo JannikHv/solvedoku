@@ -2,8 +2,7 @@
 
 #include "solver.hpp"
 
-int main(void)
-{
+int main(void) {
     int matrix[9][9] = {
         { 0, 0, 5, 3, 0, 0, 0, 0, 0 },
         { 8, 0, 0, 0, 0, 0, 0, 2, 0 },

@@ -6,13 +6,11 @@
  * Public
  */
 
-bool Solver::solveSudoku(int matrix[9][9])
-{
+bool Solver::solveSudoku(int matrix[9][9]) {
     return Solver::solvePosition(matrix, 0, 0);
 }
 
-void Solver::displaySudoku(int matrix[9][9])
-{
+void Solver::displaySudoku(int matrix[9][9]) {
     for (int i = 0; i < 9; i++) {
         for (int k = 0; k < 9; k++) {
             printf("%d ", matrix[i][k]);
@@ -26,8 +24,7 @@ void Solver::displaySudoku(int matrix[9][9])
  * Private
  */
 
-bool Solver::isValidValue(int matrix[9][9], int row, int col, int value)
-{
+bool Solver::isValidValue(int matrix[9][9], int row, int col, int value) {
     /* Check vertically and horizontally */
     for (int i = 0; i < 9; i++) {
         if (matrix[i][col] == value || matrix[row][i] == value) {
@@ -35,12 +32,8 @@ bool Solver::isValidValue(int matrix[9][9], int row, int col, int value)
         }
     }
 
-    /* Check block */
-    const int block_row = (int) (row / 3) * 3;
-    const int block_col = (int) (col / 3) * 3;
-
-    for (int i = block_row; i < (block_row + 3); i++) {
-        for (int k = block_col; k < (block_col + 3); k++) {
+    for (int i = row; i < (row + 3); i++) {
+        for (int k = col; k < (col + 3); k++) {
             if (matrix[i][k] == value) {
                 return false;
             }
@@ -50,8 +43,7 @@ bool Solver::isValidValue(int matrix[9][9], int row, int col, int value)
     return true;
 }
 
-bool Solver::solveNextPosition(int matrix[9][9], int row, int col)
-{
+bool Solver::solveNextPosition(int matrix[9][9], int row, int col) {
     if (col >= 8) {
         return Solver::solvePosition(matrix, (row + 1), 0);
     } else {
@@ -59,8 +51,7 @@ bool Solver::solveNextPosition(int matrix[9][9], int row, int col)
     }
 }
 
-bool Solver::solvePosition(int matrix[9][9], int row, int col)
-{
+bool Solver::solvePosition(int matrix[9][9], int row, int col) {
     /* Sudoku is solved if trying to access row that is out of range */
     if (row >= 9) {
         return true;
